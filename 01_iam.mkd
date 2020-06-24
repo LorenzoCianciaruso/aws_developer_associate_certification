@@ -16,7 +16,7 @@ Limit to 100 groups in the AWS account, and each user can be part up to 10 group
 ### Best practice
 Assign role to EC2 instance rather than a set of credentials, so that in can access an s3 bucket for instance.
 In this way you don't have the burden to rotate keys and you can easiy update permissions for a fleet of EC2 instances.
-
+```
   *IAM ROLE*
        ^
        |
@@ -24,7 +24,7 @@ In this way you don't have the burden to rotate keys and you can easiy update pe
     +-----+          +----+
     | EC2 |  ------> | S3 |
     +-----+          +----+
-
+```
 
 You can temporarily add a role to a user for special purposes instead of adding the role or permission stright to the user.
 
