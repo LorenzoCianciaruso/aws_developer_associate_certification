@@ -1,0 +1,32 @@
+# 01. IAM
+
+IAM allows you to perform authentication and authorization to access AWS resources
+
+## Users
+You create users to identify users (which can be humans or applications) and then you can assign them permissions to access resources.
+
+Ways to authenticate:
+- Programmatic: using Access key (20 chars) and Secret (40 chars)
+- Via AWS Management Consoel (portal): username and password
+
+## Groups, Roles, Policies
+Best policy is to create groups to which you can assign POLICIES so that you can modify once for all the users.
+Limit to 100 groups in the AWS account, and each user can be part up to 10 groups.
+
+### Best practice
+Assign role to EC2 instance rather than a set of credentials, so that in can access an s3 bucket for instance.
+In this way you don't have the burden to rotate keys and you can easiy update permissions for a fleet of EC2 instances.
+
+  *IAM ROLE*
+       ^
+       |
+       |     
+    +-----+          +----+
+    | EC2 |  ------> | S3 |
+    +-----+          +----+
+
+
+You can temporarily add a role to a user for special purposes instead of adding the role or permission stright to the user.
+
+## Roles
+4 types of roles:
