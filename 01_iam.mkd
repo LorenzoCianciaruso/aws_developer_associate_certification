@@ -1,5 +1,4 @@
 # 01. IAM
-
 IAM allows you to perform authentication and authorization to access AWS resources
 
 ## Users
@@ -12,6 +11,11 @@ Ways to authenticate:
 ## Groups, Roles, Policies
 Best policy is to create groups to which you can assign POLICIES so that you can modify once for all the users.
 Limit to 100 groups in the AWS account, and each user can be part up to 10 groups.
+
+Roles are used to grant temporary permission to Identities, or permanent roles to Resources. Roles have policies attached.
+
+So Groups and Roles pretty much reflect the same concept, the difference is that Groups are a collections of users to which
+policies are attached, while roles set permissions to resources via policies.
 
 ### Best practice
 Assign role to EC2 instance rather than a set of credentials, so that in can access an s3 bucket for instance.
@@ -30,3 +34,28 @@ You can temporarily add a role to a user for special purposes instead of adding 
 
 ## Roles
 4 types of roles:
+- Service Role: roles attached to services (es. EC2)
+- Aws Service-Linked Role
+- Cross-Account access Role (trusting and trusted account for Cross-Account operations)
+- Identity Provider Access Role (for Identity federation or Amazon Cognito)
+
+## How to declare a policy in JSON
+- Version
+- Statement
+  - Sid: identifies
+  - Action: Operation subject
+  - Effect: Allow/Deny, by default it's Deny
+  - Resource: Resource subject, ARN arn:partition:service:region:account-id:resource
+  - Condition: when is the policy be effective, all the conditions must be met
+
+2 types of policies:
+- AWS managed policies
+- Custom policies
+
+Inline policies are directly embedded into a User, Group or Role --> they can't be reused across other Identities (BAD PRACTICE)
+If there are two contradicting policies, the deny will also take place instead of the allow, independently of the order.
+
+**Identity Federation** allows you to use different Identity providers rather then creating users via AWS Users. (Active Directory, Okta, Google, etc)
+It Supports OpenID or SAML
+
+You can extract a Credentials report for audit and security compliance. It contains info such as ARN ID, Last Password rotation, Last Access Key Sec Rotation etc.
