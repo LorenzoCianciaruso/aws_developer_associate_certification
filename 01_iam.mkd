@@ -59,3 +59,26 @@ If there are two contradicting policies, the deny will also take place instead o
 It Supports OpenID or SAML
 
 You can extract a Credentials report for audit and security compliance. It contains info such as ARN ID, Last Password rotation, Last Access Key Sec Rotation etc.
+
+## Test correction
+**Question**:The IAM service provides a level of integration with the Key Management Service (KMS). Which KMS component(s) can be created using this integration?
+**Answer**: KMS Customer Master Key (CMK)
+**Explanation**: (KMS and CMK)[https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html]
+IAM allows you to create and manage your KMS Customer Master Keys (CMK) from within the IAM Console. The CMK is primarily used to protect data keys, which are used to encrypt your data within AWS.
+
+To administer your CMK, select ‘Encryption Key’s within the side menu bar, from here you can create a new CMK, view any existing CMK’s which will show:
+
+Which Region the key exists in
+the alias
+The Key ID
+It’s status
+and the creation date of the CMK
+
+**Question**: If you generated and downloaded a credential report at 16:00, then what time could a new credential report be generated?
+**Answer**: 20:00
+**Explanation**: The credential report will only be generated once in 4 hours. In our example, if you downloaded a credential report for the first time at 16:00 a new report will be generated and downloaded. If you then wanted to download another credential report at 19:00, a new report will not be generated — instead, the existing report that was generated at 16:00 would simply be downloaded. To generate a new report, you have to wait at least 4 hours from the previous generation.
+
+**Question**:___________________ allows you to delegate access to resources across different AWS accounts that you own without needing to create IAM users in each account.
+**Answer**: Cross-Account Access
+**Explanation**: You can use a role to delegate access to resources that are in different AWS accounts that you own (Production and Development). You share resources in one account with users in a different account. By setting up cross-account access
+in this way, you don't need to create individual IAM users in each account. In addition, users don't have to sign out of one account and sign into another in order to access resources that are in different AWS accounts. After configuring the role, you see how to use the role from the AWS Management Console, the AWS CLI, and the API.
