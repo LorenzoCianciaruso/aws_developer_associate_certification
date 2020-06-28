@@ -6,7 +6,6 @@ Aws services:
 - Network
 
 ## EC2
-
 ### EC2 Characteristics
 ### AMI
 Template of pre-configured EC2 instances containing OS and potentially other software and custom configuration. You can pre select them from: 
@@ -25,13 +24,41 @@ Template of pre-configured EC2 instances containing OS and potentially other sof
 - On-demand capacity: reserve capacity based on some attributes
 
 ### Tenancy
-
 - Shared Tenancy: what's the underlying server that your instance will run on? It guarantees that your instance will run on specific hosts depending on your constraints. The same hosts will be used by multiple customer, it's still just a vm
 - Dedicated Instances: Dedicated just to you. They are more expensive
 - Dedicated Hosts: more control and visibility in the host.
 
 ### Storage
-
 - Persistent by attaching EBS storage. They are detached from the physical host, but within the same netowrk.
 - Ephemeral just uses the local storage: when stop or terminated data is lost. If you reboot data will be preserved.
 
+### Security
+Security Group: open and close ports for in/out comms
+
+#### Status Checks
+- System Status check: Checks for things out of our control: no power, hardware issues etc. Sol: stop instance and restart. Reboot doesn't help because it will run on the same hardware
+- Instance Status check: config error on the instance. Incorrect network, corrupt file system, exhausted memory
+
+## ECS - EC2 Container Service
+
+## ECR - Elastic Container Registry Service
+Secure location to store and manage Docker images. All managed by AWS.
+
+### Components
+#### Registry
+Registry is the component that allocate space for your images. You can create images repositories, and you can access
+the registry through an url. Similar to Nexus.
+
+#### Authorization Token
+You'll need a token in order to communicate with your Docker registry.  
+
+#### Repository
+Grouping images in Repositories. You can define some custom access rule to each repository
+
+#### Repository Policy
+Policy for accessing Repository, there are some pre-defined ones. These are Resource based policy.
+Each user will require access to the **ecr:GetAuthorizationToken** API call in order to get a token and
+be validated by the policy
+
+#### Image
+Pull or push images to the registry
