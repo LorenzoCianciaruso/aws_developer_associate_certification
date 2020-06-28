@@ -40,6 +40,10 @@ Security Group: open and close ports for in/out comms
 - Instance Status check: config error on the instance. Incorrect network, corrupt file system, exhausted memory
 
 ## ECS - EC2 Container Service
+Run dockerised applications in a cluster that is managed by AWS via AWS Fargate.
+AWS Fargate is an engine to allow useing ECS and deploy apps to clusters.
+
+Cluster can only scale into a single region, but multiple availability zones.
 
 ## ECR - Elastic Container Registry Service
 Secure location to store and manage Docker images. All managed by AWS.
@@ -61,4 +65,52 @@ Each user will require access to the **ecr:GetAuthorizationToken** API call in o
 be validated by the policy
 
 #### Image
-Pull or push images to the registry
+Pull or push images to the regist
+
+## AWS Elastic Beanstalk
+Service that use config for different environment to deploy an application. The service is free to use.
+
+### Components
+- Application version
+- Environment
+- Environment Configurations
+- Environment Tier (Web Server Environment or Worker Environment)
+- Configuration Template
+- Platform: Components that you need to run your applications
+- Applications
+
+## AWS Lambda
+Service to run code without managing the underlying infrastructure. Highly scalable and only charge when
+the code is actually running.
+
+### Components
+- Lamda
+- Event sources
+- Trigger
+- Downstream Resources
+- Log Streams
+
+## AWS Batch
+Batch computing workload
+
+### Components
+- Jobs
+- Job Definiton: When, how, what role and computing power
+- Job Queues
+- Job Scheduler: when to run and for what environment
+- Environments: can be Managed or UnManaged
+
+## Amazon Lightsail
+Virtual Private Server (VPS) backed by Amazon Infrastructure. Easy, quick and cheap, for small business and single users. 
+
+## Test correction
+**Question**: When thinking of AWS Elastic Beanstalk, which statement is true?
+**Answer**: Workers Tiers pull data from SQS. Elastic Beanstalk installs a daemon on each Amazon EC2 instance in the Auto Scaling group to process Amazon SQS messages in the worker environment. The daemon pulls data off the Amazon SQS queue, inserts it into the message body of an HTTP POST request, and sends it to a user-configurable URL path on the local host. The content type for the message body within an HTTP POST request is application/json by default. (Doc)[http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features-managing-env-tiers.html]
+
+**Question**:In which of the following AWS Batch components can a user set a priority level, for time-sensitive or low-priority jobs?
+**Answer**: Within a job queue. When you submit an AWS Batch job, you submit it to a particular job queue, where it resides until it is scheduled onto a compute environment. You associate one or more compute environments with a job queue, and you can assign priority values for these compute environments and even across job queues themselves. For example, you could have a high priority queue that you submit time-sensitive jobs to, and a low priority queue for jobs that can run anytime when compute resources are cheaper. (Doc)[https://docs.aws.amazon.com/batch/latest/userguide/what-is-batch.html]
+
+**Question**: In Elastic Beanstalk, which of the following refers to a version that is deployed onto AWS resources?
+**Answer**: An environment. In Elastic Beanstalk, an environment is a version that is deployed onto AWS resources. (Doc)[http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/concepts.components.html]
+
+
