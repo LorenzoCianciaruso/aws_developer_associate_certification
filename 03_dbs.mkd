@@ -1,0 +1,88 @@
+# 03 DBs
+
+Regions contains Availability Zones (AZ). Each AZ is isolated in term of network and power supply.
+
+* Relational DBs
+* Non-Relational DBs
+
+## Relational DBs
+### Amazon RDS
+
+- Aurora: MySQL, PostgreSQL -> Amazon fork with optimized engines
+- Commercial: Oracle, MS SQLServer
+- Community: MySQL, PostgreSQL, MariaDB
+
+You need a persisten connection to the DBs in order to access is.
+
+#### Benefits
+- Components Scaling
+- Automatic Back ups and Patching
+- High Availability: you can run it in different AZs
+- Automatic Failure detection and recovery
+
+#### MySQL
+Currently Supporst MySql 5.5, 5.6, 5.7
+
+Instance Support:   
+* Micro Instance
+* General Purpose
+* Memory Optimized
+* Burst Support
+
+Storage Support:
+- SSD General Purpose
+- SSD Provisional IOPS: predictable performance up to 40.000 IOPS
+
+#### MS SQL Server
+Price includes license (2008R2, 2012, 2014, 2016, 2017)
+
+Instance Support:
+* General Purpose
+* Memory Optimized
+* Burst Support
+
+Storage Support
+* SSD General Purpose: form 3 to 3.000 IOPS per GB
+* SSD Provisional IOPS: from 1.000 to 32.000 IOPS up to 16TB
+
+#### Oracle
+Supports: BYOL and Oracle Database 12c. You can use your own license or use one provided by AWS.
+
+#### Maria DB
+Instance Support:   
+* Micro Instance
+* General Purpose
+* Memory Optimized
+* Burst Support
+
+#### PostgreSQL
+Instance Support:
+* Micro
+* Standard
+* Memory Optimised
+
+#### Amazon Aurora
+Cloud native high performance forked from MySQL but optimised.
+
+Replicated data across 3 AZs by default. Write only on Master, the other replicas only Reads.
+
+### Amazon RedShift
+DataWarehouse DB
+
+## Non-Relational DB
+- Dynamo DB
+- Amazon ElastiCache: MemCache.d, Redis
+- Amazon Neptune: Graph DB
+
+### Dynamo DB
+Fully Managed. Supports Document and key store objects.
+You can download a local version of Dynamo DB so that you can test it locally. It is encrypted. Supports both speed and perfomance
+
+### Amazon ElastiCache
+It's basically a frontline cache fully managed built on top of Redis and Memcache.d.
+Memcached for speed and simplicity, Redis supports more feature (cache for complex objects)
+Amazon Neptune graph DB
+
+You'll access it by HTTP, so you need authorisation to do so.
+
+
