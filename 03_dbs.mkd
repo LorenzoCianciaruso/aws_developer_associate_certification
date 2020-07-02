@@ -43,6 +43,8 @@ Storage Support
 * SSD General Purpose: form 3 to 3.000 IOPS per GB
 * SSD Provisional IOPS: from 1.000 to 32.000 IOPS up to 16TB
 
+**NOTE:** Microsoft SQL Server is the one database engine that offers high availability with server mirroring instead of the AWS standard feature of Multi-AZ deployments.
+
 #### Oracle
 Supports: BYOL and Oracle Database 12c. You can use your own license or use one provided by AWS.
 
@@ -82,4 +84,15 @@ Amazon Neptune graph DB
 
 You'll access it by HTTP, so you need authorisation to do so.
 
+### Test practice
+**Question:** What AWS database service offers a non-relational database optimized for storing and navigating billions of relationships with millisecond query latency?
+**Answer:** Amazon Neptune. Amazon Neptune is a graph database service that makes it easy to build and run applications that need to use a lot of queries and lookups to quickly visualize data. Now graphing data can require a complex number of connection strings and related queries.
+
+**Question:** Which Amazon RDS database engine offers high availability with database server mirroring instead of multi-AZ deployment?
+**Answer:** MS SQL Server. Microsoft SQL Server is the one database engine that offers high availability with server mirroring instead of the AWS standard feature of Multi-AZ deployments.
+
+**Question:** Elasticache for Redis is recommended over Memcached for all the uses cases below except which one?
+**Answer:** You are running large nodes with multiple cores or threads. Memcached is ideal for developing a service with the simplest model possible, prioritizing scalability, and running large nodes with multiple cores and threads.
+
+Result: 80%
 
