@@ -96,3 +96,21 @@ You'll access it by HTTP, so you need authorisation to do so.
 
 Result: 80%
 
+
+## RDS Multi-AZ deployment
+- Failover process: when a lead node fails, then AWS automatically switches to a replica nodes with no manual changes in the environment.
+AWS updated the DNS to point to the secondary node within 60-120 seconds. You can get notified when a failover happens because AWS
+produces an event called __RDS-EVENT-0025__, so that you can analyze the event and understand what happened.
+
+* For MS SQL Server achieves resilience with mirroring instead of Multi-AZ deployment. Although not available on all versions of MS SQL Server.
+The difference with automatic multi-AZ deployment is that you need to declare where you want your replicas to live in. You need to define a VPS that span across at least 2 AZs and where your main has to live at least in one of them.
+* Aurora is by default Fault tolerant. Although, replicas are deployed across different AZs, but the master is only in one AZ, which means that
+if master fails, it can take time long (10 min) to build a new master in a different AZ. Although if you enable multi AZ then, replicas are kept alive in different AZ and when a failure happens then one of those replicas can be elected as master. You can have up to 15 replicas per AZ if required.
+
+### Read replicas
+These are used to increase performances, not for resiliency. This feature is only available for MySql, MariaDB and PostgreSQL.
+It can be even cross region, and in case of failure one of the replicas can be elected as lead node.
+
+* MySQL: up to 4 layers deep, up to 5 read replicas per source database, which it ends up being a tree with 5 children per node and 4 level of deepness. So you get a lot of read replicas.
+* Maria DB: same as above
+* PostgreSQL: Backup retention must be greater than 0. It has to be version 9.3.5 or higher. Data is replicated asynchrounously by sending the WAL FILE to the replicas. You also need a specific role to manage the replication. You can't have nested replicas lime for MySql or MariaDB
