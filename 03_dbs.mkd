@@ -114,3 +114,48 @@ It can be even cross region, and in case of failure one of the replicas can be e
 * MySQL: up to 4 layers deep, up to 5 read replicas per source database, which it ends up being a tree with 5 children per node and 4 level of deepness. So you get a lot of read replicas.
 * Maria DB: same as above
 * PostgreSQL: Backup retention must be greater than 0. It has to be version 9.3.5 or higher. Data is replicated asynchrounously by sending the WAL FILE to the replicas. You also need a specific role to manage the replication. You can't have nested replicas like for MySql or MariaDB
+
+# DynamoDB Deep dive
+Fully managed No-SQL DB.
+
+Charged by the provision throughput and amount of storage that you want. Provisioned throughput dependeds on how many concurrent writes and reads
+you want. You don't need to specify how mych storage you want because AWS will add storage as your data increases.
+
+You can query data by ID or indexes. DB is schemaless. It's designed for high availability (it routes automatically traffic if there is a failure
+and speed).
+
+**Downside**:
+* Data is eventually consistent (because you have multiple nodes)
+* No flexible query language (you can't fdo join etc, you need to do it at application level)
+* Limited data type (string, text, number, boolean, binary data. No dates etc)
+* 400kb maximum item size and 10 indexes per table
+* Performance limited by throughput level (easy to fix and increase though)
+* Locked in
+
+## Working with DynamoDB
+You'll access Dynamo by HTTP calls.
+You can define Partition Key and Sort Key. (What's a sort key? It's a second value to create a composite key) Sort keys can be searched also
+by range (number or strings)
+
+**Read Capacity Unit**: 1 item, up to 4KB, with strong consistency per second
+If your data are bigger than 4KB then you use 1 capacity unit every 4KB, round upwards.
+Eventually consistency read cost half of the above
+
+**Write Capacity Unit**: 1 item, up to 1KB per second. For above 1KB, 1 write capacity per 1KB.
+
+Data are partition on different disks based on the partition key, AWS uses and hash function that based on the partition key will store
+the data onto some partition. Good partition keys: UserIds, etc. The partition is set up by AWS when the table is creating, and this is to
+ensure that they can meet the requested Read/Write throughput
+Data then can be sorted by sort key.
+
+**NOTE**:DynamoDB is optimized for uniform distribution of items across a table's partitions, no matter how many partitions there may be. We recommend that you choose a partition key that can have a large number of distinct values relative to the number of items in the table.
+
+### How to query
+Sort keys can be searched also by range (number or strings). And you can filter by all other values as well (but you'll have to scan the whole db for that. In this case add a secondary index).
+Result can be ordered by sort key. They can be strongly consistent or eventually consistent. Strong consistency search the data across all the partitions
+in the availability zones.
+
+**Scan**: a scan search across all partition keys and they can be filtered on any attributes. Scan cannot be ordered and are always eventually consistent.
+They can be run in parallel.
+
+**Note**: When you query you have to explicitly say which indexes you want to use! And you can also chose what field to project when you use other indexes (obv this is more expensive in term of Read capacity because it will get a bigger data size)
