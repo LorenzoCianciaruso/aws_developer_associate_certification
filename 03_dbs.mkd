@@ -113,4 +113,4 @@ It can be even cross region, and in case of failure one of the replicas can be e
 
 * MySQL: up to 4 layers deep, up to 5 read replicas per source database, which it ends up being a tree with 5 children per node and 4 level of deepness. So you get a lot of read replicas.
 * Maria DB: same as above
-* PostgreSQL: Backup retention must be greater than 0. It has to be version 9.3.5 or higher. Data is replicated asynchrounously by sending the WAL FILE to the replicas. You also need a specific role to manage the replication. You can't have nested replicas lime for MySql or MariaDB
+* PostgreSQL: Backup retention must be greater than 0. It has to be version 9.3.5 or higher. Data is replicated asynchrounously by sending the WAL FILE to the replicas. You also need a specific role to manage the replication. You can't have nested replicas like for MySql or MariaDB
