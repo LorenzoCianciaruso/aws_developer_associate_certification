@@ -1,0 +1,72 @@
+# 04. AWS Storage
+
+* Block storage: Data are stored in chuncks called Blocks, these are associated to an instance. Low latency
+* File storage: There is a file system and multiple users can access it
+* Object storage: Flat address space addressed by a key
+
+
+## S3
+
+Fully manage object storage. Unlimited scalability and high availability, file stored across multiple AZs
+Largest file is 5 terabytes
+
+Durability: 99.999999999%
+Availability: 99.99%
+
+Bucket has to be named uniquely globally
+By default 100 buckets limit but it can be increased
+
+### Storage classes
+
+* Frequently accessed
+* Infrequently accessed: more cost effective than Standard-IA but it has less Availability 99.5%
+* Intelligent Tiering: depending on how many time you access the data AWS will move objects to the infrequently accessed if they aren't used
+much
+
+### Security
+
+
+* Bucket policy
+* Access Control List: for users outside your AWS account.
+* Data Encryption: via S3 managed keys, KMS manages keys, Customer Managed (Encryption Infographic)[https://awsinfographics.s3.amazonaws.com/S3_Encryption_Infographic.png]
+
+**Features:**
+* Versioning, once enabled it can be disabled but only suspended. It adds costs
+
+**S3 anti-patterns:**
+* Data archiving for long term use
+* Data changing frequently
+* File system requirements
+* Structured data with queries
+
+## Amazon Glacier
+
+Half the cost than S3, but doesn't provide immediate access (cold storage)
+Good for **backups** and archival requirements. Same Durability than S3, but it can take up to 7hrs to get data.
+Everything is done via Apis, no portal.
+
+You need to create a vault first and then upload your data to Glacier.
+
+Data Retrieval: 
+* Expedite limit to 250MB available in 1-5min.
+* Standard: any size but 3-5 hours
+* Bulk: Petabytes but up to 12 hrs
+
+### Security
+Data is encrypted, and you have Vault access policies and vault Lock Policies
+
+## EC2 Instance Storage 
+Block Storage Temporary storage, not recommended for critical data. They use the instance storage, and because of that if the instance is stopped or it has a hardware
+fault, you'll lose the data. If reboted it's ok because the storage will be on the same host where it run previously.
+
+**Why should you use it?** Because it's very fast, up to 3.3million IOPS in read and 1M IOPS in write, and it doesn't have any additional cost than just the EC2 instance itself. For data rapidling changing.
+
+Not good for critical data, if multiple users need to access it 
+
+## EBS
+Block Storage
+It's a persistent storage that you can apply to an EC2 instance. You can only associated an EBS storage to one EC2, but multiple EBS storages can be associated to one EC2 instance. One EBS storage can only be associated to an EC2 instance withing the same region, and if the machine fails it can be moved onto another machine using a snapshot for example.
+
+You can take snapshot of an EBS, save the image in S3 and then recover from the image in case the module had failed.
+One EBS module it's replicated multiple times **within the same region** (remember you can only access an EBS module in the same region).
+Your EBS storage can either be SSD or HDD, SSD it's for small blocks and it has high read and write performance. HDD is tuned for bigger blocks (it doesn't have to chunk data into small pieces to store, but just continually writes onto the disk with no interruption)
