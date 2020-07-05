@@ -156,6 +156,22 @@ Result can be ordered by sort key. They can be strongly consistent or eventually
 in the availability zones.
 
 **Scan**: a scan search across all partition keys and they can be filtered on any attributes. Scan cannot be ordered and are always eventually consistent.
-They can be run in parallel.
+They can be run in parallel. If you are using filters to scan across all partition, the scan will be slow because it has to go each row contained in DB.
 
 **Note**: When you query you have to explicitly say which indexes you want to use! And you can also chose what field to project when you use other indexes (obv this is more expensive in term of Read capacity because it will get a bigger data size)
+
+#### Secondary Indexes
+* Global Secondary Indexes: across the whole table. You need to define a specific throughput for these indexes. 5 GSI per table
+* Local Secondary Indexes: across single partition keys, they are less expensive than a Global Seconday Index but they make sense to be used only when you have a composite key in a partition. For example it would makes sense for a query like: get all unshipped orders for a given customer. Where customer might be the partition key, orders the sort key, and Status of the delivery the Local Secondary Index. Throughput is shared with the main table. 5 GSI per table
+
+Both types of indexes can be created when the table is created, but only Local Secondary Indexes can be added, changes or removed once they have been created.
+
+#### Partitioning
+When more the 10GB or read/write higher than a certain level. AWS partitions the data even more for performances.
+Formula: max(DB_size/10GB, (Read_capacity/3000) + (Write_capacity/1000))
+
+The interesting thing about partition is that if they are not balanced in term of number of hashed keys that each table contains then
+you might encounter some issues because the read/write capacity is shared across the whole table, they all get 1/n (where n is the number of partitions) of the total read/write capacity. Which means that heavy trafficated partitions might stop working by hitting the capacity limit
+Usually number of partition is a power of 2 if data are shared in a balanced way.
+
+The solution to this basically is to not have composite keys in any tables, which makes queries and indexing more complicated but it ensures that all partitions are balanced.
