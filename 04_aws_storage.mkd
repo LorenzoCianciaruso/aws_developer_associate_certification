@@ -70,3 +70,38 @@ It's a persistent storage that you can apply to an EC2 instance. You can only as
 You can take snapshot of an EBS, save the image in S3 and then recover from the image in case the module had failed.
 One EBS module it's replicated multiple times **within the same region** (remember you can only access an EBS module in the same region).
 Your EBS storage can either be SSD or HDD, SSD it's for small blocks and it has high read and write performance. HDD is tuned for bigger blocks (it doesn't have to chunk data into small pieces to store, but just continually writes onto the disk with no interruption)
+
+## Elast File System
+it's a file system, so level abstractions, that you can access concurrently with many user. It is setup at region level, so it can be visible by all the AZs within the same region. When you declare one, AWS automatically creates a mount point that you can use to access the file system.
+It's elastic because it can scale indefinitely.
+
+Currently it doesn't support Windows OS, and it's based on NFS 4.0 and 4.1.
+
+You can chose between a standard layer (up to 7000 IOPS) and a max I/O layer which maximise I/O but improves latency.
+You are charged by GB/hour you are using in a month.
+
+## Amazon CloudFront
+CND - Content Delivery Network
+You don't really store data in here, but you use it as a cache to minimize latency when users are trying to access data that you own, let's say in S3.
+It's a performance optimisation in order to serve you data faster to users that live in content different from your region.
+
+Cloudfront is located on the so called Edge platform, those are datacenter located close to location densely populated that do not offer the whole set of Amazon services.
+
+It's priced based on the network consumption.
+
+## AWS Storage gateway
+
+It's an abstraction layer that allows the shared file system of your company to be stored into S3 or other AWS Storage Services.
+It is an appliance downloaded from Amazon and run as a VM in your data center!
+
+The idea is that you put an AWS Gateway between your company file system and S3 so that you can store and back up your data from your file system
+It communicates over the NFS protocol and provide the benfit of quickly represent resources as they were S3 resources.
+
+You can also recover from disasters more quickly because you can build EBS snapshots from data that have been stored in s3 from your file system.
+
+There are different options of usage (?)
+
+Pricing is per: data storage, data transfer and requests.
+
+## AWS Snowball
+If you need to transfer data in the order of petabytes and it would take more than a week to upload them using the internt then AWS Snowball might help you. Amazon will send you physical encrypted drives where you'll upload all of your data and ship them back to amazon, which will then upload them to the cloud. Everything is encrypted and support the toughest level of compliance so that even health personal data can be uploaded.
