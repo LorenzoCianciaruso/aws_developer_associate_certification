@@ -71,7 +71,7 @@ You can take snapshot of an EBS, save the image in S3 and then recover from the 
 One EBS module it's replicated multiple times **within the same region** (remember you can only access an EBS module in the same region).
 Your EBS storage can either be SSD or HDD, SSD it's for small blocks and it has high read and write performance. HDD is tuned for bigger blocks (it doesn't have to chunk data into small pieces to store, but just continually writes onto the disk with no interruption)
 
-## Elast File System
+## Elastic File System
 it's a file system, so level abstractions, that you can access concurrently with many user. It is setup at region level, so it can be visible by all the AZs within the same region. When you declare one, AWS automatically creates a mount point that you can use to access the file system.
 It's elastic because it can scale indefinitely.
 
@@ -105,3 +105,38 @@ Pricing is per: data storage, data transfer and requests.
 
 ## AWS Snowball
 If you need to transfer data in the order of petabytes and it would take more than a week to upload them using the internt then AWS Snowball might help you. Amazon will send you physical encrypted drives where you'll upload all of your data and ship them back to amazon, which will then upload them to the cloud. Everything is encrypted and support the toughest level of compliance so that even health personal data can be uploaded.
+
+## Test practice
+
+**Question:** In Amazon CloudFront, when using a network of edge locations around the world, requests for your dynamic content are ___________.
+**Answer:** sent to your origin servers running within or outside of AWS.
+In Amazon CloudFront, requests for your dynamic content are carried back to your origin servers running in Amazon Web Services (e.g., Amazon EC2, Elastic Load Balancing) over optimized network paths for a more reliable and consistent experience. (here)[http://aws.amazon.com/cloudfront/]
+
+ 
+**Question:** A user has launched a dedicated EBS-backed instance. You are curious where the EBS volume for this instance will be created. 
+Which statement is correct about the EBS volume's creation?
+**Answer:** The EBS volume will not be created on the same tenant hardware assigned to the dedicated instance.
+The dedicated instances are Amazon EC2 instances that run in a Virtual Private Cloud (VPC) on hardware that is dedicated to a single customer. When a user launches an Amazon EBS-backed dedicated instance, the EBS volume does not run on single-tenant hardware. (Here)[http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/dedicated-instance.html]
+
+**Question:** In AWS Storage Gateway, a volume gateway enables you to create volumes and mount them as _____ devices from on-premises application servers.
+**Answer:** Internet small computer system interface (iSCSI)
+Volume gateway provides an iSCSI target to create volumes and mount them as iSCSI devices from on-premises application servers. The file gateway enables the storage and retrieval of objects in Amazon S3 using file protocols. The tape gateway provides the backup application with an iSCSI virtual tape library (VTL) interface which consists of a virtual media changer, virtual tape drives, and virtual tapes. (here)[http://docs.aws.amazon.com/storagegateway/latest/userguide/WhatIsStorageGateway.html]
+
+**Question:** At what level can Amazon S3 Access Control Lists (ACLs) be applied?
+**Answer:** the bucket and object level
+S3 ACLs allow identities to access specific objects within buckets a different layered approach than bucket policies which are applied at the bucket level only. ACLs allow you to set certain permissions on each object within a specific Bucket.
+
+These ACLs do not follow that same format as the policies defined by IAM and Bucket policies. Instead, they are far less granular, and different permissions can be applied depending if you are applying an ACL at the bucket or object level. (here)[http://docs.aws.amazon.com/AmazonS3/latest/dev/S3_ACLs_UsingACLs.html]
+
+**Question:** In Amazon Elastic File System (EFS), which of the following performance modes is ideal for applications where tens, hundreds, or thousands of Elastic Compute Cloud (EC2) instances access a file system?
+**Answer:** Max I/O mode
+Amazon EFS offers two performance modes: General Purpose mode and Max I/O mode. The performance mode is selected when the file system is created. The Max I/O performance mode is best suited for applications where multiple EC2 instances access the file system, as it can scale to higher levels of aggregate throughput and operations per second with a tradeoff of negligibly higher latencies for file operations.
+(here)[http://docs.aws.amazon.com/efs/latest/ug/performance.html]
+
+
+**Question:** What statements regarding EBS encryption are correct? (Choose 2 answers)
+**Answer:** 
+1. 	EBS automatically encrypts snapshots of encrypted volumes.
+2.  EBS automatically encrypts volumes restored from encrypted snapshots.
+
+Snapshots that are taken from encrypted volumes are automatically encrypted. Volumes that are created from encrypted snapshots are also automatically encrypted. Your encrypted volumes and any associated snapshots always remain protected. For more information, see Amazon EBS Encryption. (here)[http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html]
