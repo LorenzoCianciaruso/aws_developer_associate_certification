@@ -1,0 +1,79 @@
+# 05. Encryption
+
+5 different ways:
+1. Server Side encryption with S3 encryption key (SSE-S3)
+2. Server Side encryption with KMS
+3. Server Side encryption with custom keys
+4. Client Side encryption with KMS
+5. Client Side encryption with custom keys
+
+## SSE-S3
+
+S3 manages the key for you, no extra configuration needed.
+Object are encrypted and decrypted with the use of a plain text key and a master key. The plain text key is a new one for each object,
+while the S3 key is the same each time given a bucket.
+
+## SSE-KMS
+
+There is a key in KMS associated with the bucket
+On upload the client tells wich key should be use, and KMS return to s3 the plaintext key and the encrypted key
+that S3 will use to encrypt the data, and store the encrypted data and the encrypted key. Plaintext key is then discarded.
+
+On download, s3 sends to kms the encrypted data key, KMS return the plaintext key that S3 will use to decrypt the encrypted object stored, and then
+it will return the unecrypted object to the client that requested the object.   
+
+## SSE-C
+Server validation with customer keys.
+On uploads and downloads the client will always provide to key to encrypt and decrypt in the request. It only supports https.
+
+## CSE-KMS
+Encryption and decryption happens client side at each time.
+On upload, the client has to call KMS to get the keys, the plaintext key and the cypher blob key. Then locally on client side it encrypts the data with the plaintext key, and stores on s3 the encrypted data together with the cyper blob key.
+
+Then on download, data is retrieved from s3 along with the cyper blob key. on a subsequent call the client call KMS by passing the cyper blob key, KMS resolves the cyper blob using the CMK to return the plaintext data key, and then the client can decrypt the object locally.
+
+## CSE-C
+Clients has CMK and plaintext key locally.
+On upload, it encrypted locally the data and it stores in S3 the encrypted object and the encrypted key.
+On download, it gets from s3 the enrypted data and the encrypted key, then with the local CMK and the encrypted key it resolves locally the plaintext key
+and decryptes the data.
+No KMS involved.
+
+# KMS
+
+AWS only uses symmetric keys.
+**NOTE:** KMS is specific per region, so if you have a multiregion deployment, then you'll have to define different KMS keys per region.
+
+## CMK
+Can encrypt up to 4km in size, used in relationship with DEK (Data Encyription Keys)
+DEKs are used to encrypt data of any size.
+
+These double encyrption of the keys is calles **envelope encryption** and it's useful because even if someone gets access to S3
+they won't be able to decrypt the data even if they possess the DEK. They'll need access to the CMK in order to decrypt the data.
+
+This is why there are some security policies that you can implement to restrain access to the CMK, so that using grants only
+specific users and services can access the CMK.
+
+Each CMK needs to be associated to a policy so that there is at least one user able to manage the key. By default, AWS associates the root account to a new CMK, and the root account can define additional policies to let other users to use and manage the keys.
+
+3 ways to access a CMK:
+* Key Policy: policy defined at key level of who should be able to access the key
+* IAM policy: permission at user/group level that defined the ability to use the key. Still the Key policy of the key needs to allow for IAM policy access.
+* Grants: If you have access to the key and have the role to grant permissions to other users then you can issue grant that allow other users to access a defined key.
+
+**Grants** are special permission that grant the use of a key to other users, grants issue token that other users needs to use in order to perform operations with the key/s (e.g.: encrypt and decrypt).
+
+Administrator aren't able to use the key to encrypt or decrypt, they should only able to manage the key
+
+Access to root account on a CMK policy allows to use IAM policies to access the key. So in order to use a key, either the CMK provides you access
+directly, or it allows IAM policies to be used to access the key and you have the right IAM policy that gives you access to the key. If you have the IAM policy that gives you access to a key, but they key doesn't allow IAM policies to be applied (it's not root access) and doesn't explicitly allow you to use it, then you can't use the key.
+
+### Key rotation
+ID and ARNs remains the same, only the key changes, so it's transparent to the user.
+Although the old key is still kept, but new material will be encrypted with the new key. So if the key is breached even if you rotate the key, an attacker can still decrypt old materials encrypted with the old key. Key rotation happens every 365 days.
+
+You can also Manully rotate keys, to make it simpler you should use alias keys instead of the key ID.
+
+You can also import your key material, AWS will generate a CMK with your key material.
+
+When deleting a key, the key goes into a pending state for 7-30 days, so that you can check if your key has been used.
