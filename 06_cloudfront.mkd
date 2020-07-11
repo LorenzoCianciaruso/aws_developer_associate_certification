@@ -1,0 +1,32 @@
+# 06. Cloudfront
+
+It caches content that can live in multiple origin. Usually S3 is one of the most popular.
+Edges are the datacenter where cloudfront live. They are external to the general AWS region. This is because
+a client can request a resource from S3 and the closest edge will be able to distribute the requested resource faster than 
+going to the closest regions. There are more edges than regions.
+
+In case the cache is missed, than the request will be forwarder to the region to get the resoruce.
+
+It can be a distribution of WEB resource (hence s3) or a distribution of dynamic resources like streaming flows.
+
+It can be monitored and you can set up alerts, there is a proper console in aws showing dashboards, hit/miss, resource being cached,
+client devices calling, etc.
+
+## Best practices for Static Content
+* use S3
+* allow access on S3 only from cloudfront
+* control access content on cloudfront
+* high TTL
+* Versioning
+
+## Best practises for Dynamic Content
+* use TTL even if it is only for a few seconds (depends on the business case)
+* using multiple caching behaviours
+
+## Best practises for Streaming
+* TTLS: LOW TTL for manifest file and HIGH TTL for Media Files and Player
+* Use http based stram protocol
+* Design for failure: use Route 53 to perform healthchecks and take necessary actions. Use Cloudwatch for alarm and notifications.
+
+## Best practises for Security
+* enble end to end HTTPS
