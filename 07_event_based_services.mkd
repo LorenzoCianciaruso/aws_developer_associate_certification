@@ -1,0 +1,54 @@
+# 07. Event based services
+
+## SQS - Simple Queue Service
+
+3 different types of queues:
+* Standard Queue
+* FIFO Queue
+* Dead Letters Queue
+
+## How it works
+
+**Producers** post messages to the **queue**, and **consumers** pick messages from the queue so that they can process them.
+Messages have a visibility time, which is the max time allowed for a service to process a message once it has been read from the queue. It means that the message is not available for other consumers to be read. After this timeout, either the message is delete from the queue by the consumer, or it is available to be processed from other consumers (assuming that the processing failed).
+
+Messages can be encrypted with the use of KMS.
+
+### Standard Queue
+* Almost unlimited scale
+* Messages can be duplicated
+* Best effor ordering (not guaranteed)
+
+### FIFO
+* Up to 300tps, or 3000tps if batched with 10 messages
+* No duplication ensured
+* Ordering ensured
+
+### Dead Letters Queue
+* It's not a source of event
+* Queue for messages that consumers have failed to delete from the queue
+* It has to be of the same type of the main queue (either standard or FIFO)
+
+## SNS - Simple Notification Service
+
+Event Notifications to other services. It can publish events to:
+* Email
+* Email-JSON
+* SMS
+* SQS
+* Lambda
+* HTTP
+* Application
+
+A **producer** will post the event onto a **topic**, which will then react and trigger an action based on the settings.
+
+## Simple Email Service
+
+Service to send email to customers
+
+
+You can receive emails as well and then you can define rules specifying what to do.
+**Recipient Based Control:** You can define rules and actions to send the email. if a rule is matched the email is sent, otherwise it's gonna be dropped.
+
+You can put filter and blocklist depending on who sent the email. By default all email by EC2 are blocked.
+
