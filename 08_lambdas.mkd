@@ -1,0 +1,33 @@
+# 08. AWS Lambdas
+
+You need:
+1. Lambda function code
+2. Event Sources (trigger that activates your Lmanda)
+3. Downstream resources if needed
+4. Logstream
+
+**Deployment package** can either be a zip or a jar file. For a zip file you need to set the right permission on your zip file.
+
+You can pick lambdas from the blueprint list.
+
+**Role Policies** determine what resources the Lambda can access. (Remember, roles are attached to resources or services and grant permission to access other resources)
+**Function Policies** define who has the permission to trigger the Lambda.
+
+You can define env var to differentiate between environments. By default env var are enrypted using the AWS/Lmabda CMK after deployment. If there are any secrets you should encrypt them prior deployment.
+
+
+**Timeout**: max time a lambda can run, default 3 seconds
+**Concurrency**: How many Lambdas can run at the same time (default 1000 concurrent requests) in a single region. You can have a reserved limit.
+**Throttle:** Limit the number of execution of your function
+**Alias:** different name for your function that you can use instead of the alias.
+**Dead Letter Queue:** you can define a DLQ in case there has been an error in processing. Lambda will retries for error twice after the first failure.
+
+## Event Sources
+There are 2 type: 
+* Poll-Based Cvent sources: Amazon Kinese, DynamoDB, Amazon SQS
+* Push-Based Event sources: other services are invoking the Lambda
+You attached these 2 by **Event Source Mapping**
+
+
+## Monitoring and Troubleshooting
+There are Deafult Dashboard in the Lambda Panel. Use Amazon Cloudwatch.
