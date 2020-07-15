@@ -1,0 +1,30 @@
+# 10. Amazon Kinesis
+
+It's a tool to deliver messages from a producer to a consumer. It's infrastructure it's similar to Kafka, although it delivers to ideally one consumer. It helps collecting data from where they are created and gives times to the consuemer to process/read the data.
+
+Producer -> Kinesis -> Consumers
+
+Kinesis is a region based service
+
+## Kinesis Streams
+
+In Kinesis Streams, your data are sent to consumer via a **Stream** abstraction. A Stream is composed by **Shards**.
+Each sharde is limited by 1000 tps in ingress and 2000 tps in egress. Then the number of shared must reflect your ability to read or write.
+
+A data goes into one of those shards depending on the partition key, hence to distribute equally the load, you have to pick a partition key that is balanced with respect to the number of shards.
+
+Data are stored for 24 hours by default, but then it can be extended up to 7 days but the cost is higher.
+
+You are billed by the number of shared per hour, and by PUT payload per hour.
+
+The **Sequence Number** is an ID that is created when a **record** gets to Kinesis.
+
+When using streams you need to create your own application to consumer data, build either with the Kinesis Client Library (KCL) or maybe a Lambda, or Shard Iterator, or some other solution.
+
+## Kinesis Firehose
+
+It's a built in Architecture that let's your store data that are collected and transformed by Kinesis.
+
+The **Delivery Stream** is composed by a **Data Flow**, within the stream a Lambda can transform data at your convenience, and once transform data can be stored either in Amazon S3, Amazon RedShift, or Amazon ElasticSearch. Firehose it's only compatible with these 3 services.
+
+It's a ready to plug in option because you don't have to create your own consumer to store the data. You just need to define the Lambda if you need to transform the data.

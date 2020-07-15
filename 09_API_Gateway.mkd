@@ -1,0 +1,12 @@
+# 09. API Gateway
+
+Interface that distributes the traffic coming from the Internet to your internal services.
+
+You create endpoints that clients can call, and the API Gateway will redirect the traffic to the configured services.
+
+Steps:
+1. Create a **model**: a model act as a validator of your incoming request and outgoing responses, and makes sure they are compliant
+2. Creata a **resource**: a resource specify the path available to be hit
+3. Create a **method**: a method associates the HTTP method to the desired behaviour or action that the API Gateway endpoint has to trigger. This is where you can associate the trigger of a Lambda as an action.
+
+You can define Authorization and API Keys to access the endpoint. Also throttling and CORS calls.

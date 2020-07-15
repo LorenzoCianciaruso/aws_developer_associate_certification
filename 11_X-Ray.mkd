@@ -1,0 +1,12 @@
+# 11. X-Ray
+
+It provides vidibility of performance of your distributed application. Very similar to what Splunk does, it provides a client (**X-Ray daemon**) to collect distributed logs from diffierent hosts via UDP, and then these data are published to the centralised X-Ray Server. And from here you can visualize where your bottlenecks or perfomance impacts are.
+
+**Service Map** is the visualization of the traces performance within your application.
+
+**Segment**: Portion of the trace that corresponds to a single service
+**Subsegment**: Remote call or local compoute within a single service
+**Trace**: End to end path of a request through out your service
+**Filters**: Expression to filter traces or requests
+**Annotation**: Business data added to traces, index for filtering (sourcetype?)
+**Metadata**: Business data added to traces, but not indexed for filtering (other filtering fields)
