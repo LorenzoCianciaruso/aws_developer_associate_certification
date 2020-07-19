@@ -1,0 +1,278 @@
+## Wrong
+### Question: You are configuring a Jenkins project that is installed on an Amazon EC2 instance running a Windows operating system. You want this Jenkins project to integrate with AWS CodePipeline.
+
+Which actions should you take to make this function perform correctly? (Choose 2 answers)
+
+**Answers:**
+- Fill out the required fields for your proxy host.
+- Provide the IAM user credentials to integrate AWS CodePipeline.
+
+(Explanation)[http://docs.aws.amazon.com/codepipeline/latest/userguide/getting-started-4.html]
+If you are configuring a Jenkins project and it is not installed on an Amazon EC2 instance, or it is installed on an Amazon EC2 instance that is running a Windows operating system, fill out the fields as required by your proxy host and port settings, and provide the credentials of the IAM user you configured for integration between Jenkins and AWS CodePipeline.
+
+### Question: Your application is down. You suspect the issue is related to a code update to the applications EC2 instances that sit behind an Elastic Load Balancer. What load balancer-specific troubleshooting steps can you take to determine the root cause and get the application running successfully again? (Choose 3 answers)
+
+**Answers:**
+- Your instances do not have the correct port open. Validate connectivity between the load balancer and the instances.
+- Validate that the health check is working as expected after the software update. Instances are not in service until one health check succeeds.
+- Your SSL certificates have expired. Update or re-install the SSL certificate on the load balancer and monitor to see if this resolves the issue.
+
+(Explanation)[http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/ts-elb-register-instance.html]
+There are multiple reasons why instances may have issues connecting to an Elastic Load Balancer. While this question does not address all possible reasons, some of these are fairly common issues. Your health check may have changed or been improperly updated during a code release. If the instances cannot communicate to the correct port, the load balancer will not direct traffic to them. There may also be SSL issues that are preventing your Elastic Load Balancer from working as expected.
+
+### Question: A user has stored data on an encrypted EBS volume. The volume was encrypted using the EBS default encryption process, which creates a AWS managed KMS customer master key for the user upon encrypting the volume.
+
+Now the user wants to share the data with another AWS account. The AWS account needs the data to be decrypted. Which of the choices below can achieve this?
+
+**Answers:** Copy the data to an unencrypted volume in your account, create a unencrypted snapshot and share access to it.
+
+(Explanation)[http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html]
+AWS EBS supports encryption of the volume. It also supports creating volumes from existing snapshots provided the snapshots are created from encrypted volumes. If the user is having data on an encrypted volume and is trying to share it with others, he has to copy the data from the encrypted volume to a new unencrypted volume.  Only then can the user share it as unencrypted volume data. Otherwise the snapshot cannot be shared.
+
+It is not possible to share access to a volume encrypted in the default process with an AWS managed CMK. The encryption would need to be done with a custom CMK in order to grant access to it to another account.
+
+
+### Question: A root account owner has created an S3 bucket named 'testmycloud'. The account owner wants to allow separate AWS accounts to upload objects, and require the separate accounts to manage permissions for their uploaded objects.  
+
+Which choice is the easiest way to achieve this?
+**Answer:** The root account should create an S3 Bucket Access Control List (ACL) for the bucket allowing separate AWS accounts to upload content to the bucket.
+
+(Explanation)[http://docs.aws.amazon.com/AmazonS3/latest/dev/S3_ACLs_UsingACLs.html]
+Each Amazon S3 bucket and object has an ACL (Access Control List) associated with it. An ACL is a list of grants identifying the grantee and the permission granted. The user can use ACLs to grant basic read/write permissions to other AWS accounts. ACLs use an Amazon S3–specific XML schema. The user cannot grant permissions to other users in his account. ACLs are suitable for specific scenarios. For example, if a bucket owner allows other AWS accounts to upload objects, permissions to these objects can only be managed using the object ACL by the AWS account that owns the object.
+
+### Question: You are a technical lead for a development team on your company's cloud environment. You want to host a few websites on Amazon S3 but one of your senior developers voices concerns about supposed limitations of using S3. You explain that Cross-Origin Resource Sharing (CORS) will handle these concerns. What can you tell your team about CORS? (Choose 2 answers)
+
+**Answer:**
+- CORS can be used to allow JavaScript that would normally be blocked when trying to access web pages on the bucket.
+- CORS will allow you to host a web font on your bucket.
+
+If you want to host a web font from your S3 bucket, browsers require a CORS check (also referred as a preflight check) for loading web fonts, so you would configure the bucket that is hosting the web font to allow any origin to make these requests.
+
+(Explanation)[http://docs.aws.amazon.com/AmazonS3/latest/dev/cors.html]
+Suppose you are hosting a website in an Amazon S3 bucket with the name website. Your users load the website endpoint http://website.s3-website-us-east-1.amazonaws.com. Now you want to use JavaScript on the web pages that are stored in this bucket to be able to make authenticated GET and PUT requests against the same bucket by using the Amazon S3's API endpoint for the bucket, website.s3.amazonaws.com. A browser would normally block JavaScript from allowing those requests, but with CORS, you can configure your bucket to explicitly enable cross-origin requests from website.s3-website-us-east-1.amazonaws.com.
+
+### Question: The EBS instance in your EBS-backed AMI has failed a status check. What are some ways to go about troubleshooting the issue? (Choose 3 answers)
+**Answer:**
+- Post your issue to the Amazon EC2 forum.
+- Create an instance recovery alarm.
+- Stop and then restart the instance.
+
+(Explanation)[http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstances.html]
+If a system status check has failed for a EC2 instance, you can try one of the following options:
+
+Stop and then restart the instance.
+Post your issue to the Amazon EC2 forum.
+Retrieve the system log and look for errors.
+
+### Question: In the context of Authentication Flow in Amazon Cognito, if you have an authenticated identity, you must pass at least one valid token for a login already associated with that identity. Also, all tokens passed in during the GetOpenIdToken call must pass the same validation mentioned earlier; if any of the tokens fail, the whole call fails. The response from the GetOpenIdToken call also includes the identity ID. Why is this?
+
+**Answer:** Because the identity ID you pass may not be the one that is returned
+
+(Explanation)[http://docs.aws.amazon.com/cognito/devguide/identity/concepts/authentication-flow/]
+In the context of Authentication Flow in Amazon Cognito, if you have an authenticated identity, you must also pass at least one valid token for a login already associated with that identity. Also, all tokens passed in during the GetOpenIdToken call must pass the same validation and if any of the tokens fail, the whole call fails. The response from the GetOpenIdToken call also includes the identity ID, because the identity ID you pass may not be the one that is returned.
+
+### Question: What predefined permission policy grants your Lambda function permissions for ONLY the Amazon CloudWatch Logs actions to write logs? 
+
+**Answer:** AWSLambdaBasicExecutionRole
+
+(Explanation)[http://docs.aws.amazon.com/lambda/latest/dg/intro-permission-model.html]
+AWSLambdaBasicExecutionRole grants permissions only for the Amazon CloudWatch Logs actions to write logs. You can use this policy if your Lambda function does not access any other AWS resources except writing logs.
+
+### Question: What predefined permission policy grants your Lambda function permissions for ONLY the Amazon CloudWatch Logs actions to write logs? 
+You want to implement a more fine-grained control of your S3 buckets by restricting access to S3 buckets on a case-by-case basis using S3 bucket policies. Which methods of access control can you implement using S3 bucket policies? (Choose 3 answers)
+
+**Answer:** Control access based on the time of day
+(Explanation)[http://docs.aws.amazon.com/AmazonS3/latest/dev/using-iam-policies.html]
+Using an S3 Bucket Policy, you can specify who can access the bucket, what time of day the can access, from which CIDR block, and by IP address.
+
+### Question: You have deployed an application hosted on both a primary instance and a secondary standby instance. The instances are in the same subnet within a VPC. If the primary instance fails, you would like to failover to the secondary instance without having to reconfigure the application. How can you accomplish this? (Choose 3 answers)
+
+**Answer:**
+- Add a second private IP address to the primary instance's ENI that can be moved to the secondary instance's ENI.
+- Use load balancing to redirect traffic to the secondary instance.
+- Attach elastic network interfaces to the primary and secondary instances
+
+(Explanation)[http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html]
+The ENI can only be attached to an instance hosted in a VPC. When you move a network interface from one instance to another, network traffic is redirected to the new instance. Some network and security appliances, such as load balancers, network address translation (NAT) servers, and proxy servers prefer to be configured with multiple network interfaces. You can create and attach secondary network interfaces to instances in a VPC that are running these types of applications and configure the additional interfaces with their own public and private IP addresses, security groups, and source/destination checking.
+
+### Question: The EC2 instance created from an instance store-backed AMI has failed a system status check. What are some ways to go about troubleshooting the issue? (Choose 3 answers)
+
+**Answer:**
+- Retrieve the system log and look for errors.
+- Wait for Amazon EC2 to resolve the issue.
+- Terminate the instance and launch a replacement.
+
+(Explanation)[http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstances.html]
+If a system status check has failed for a EC2 instance, you can try one of the following options:
+- Terminate the instance and launch a replacement.
+- Wait for Amazon EC2 to resolve the issue.
+- Retrieve the system log and look for errors.
+Stopping and restarting an instance is also an option, but only for EBS volumes, which is why it’s not an option in this case.
+
+### Question: You are creating an application that stores extremely sensitive financial information. All information in the system must be encrypted at rest and in transit. Which of these is a violation of this policy?
+
+**Answer:** Elastic Load Balancer SSL termination.
+
+(Explanation)[http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/elb-listener-config.html]
+Terminating SSL terminates the security of a connection over HTTP, removing the S for "Secure" in HTTPS. This violates the "encryption in transit" requirement in the scenario.
+
+### Question: You are a DevOps engineer responsible for supporting your company’s AWS infrastructure, consisting of multiple EC2 instances running in a VPC, DynamoDB, SQS, and S3. You are working on provisioning a new S3 bucket, which will ultimately contain sensitive data. What are two separate ways to ensure data is encrypted in-flight both into and out of S3? (Choose 2 answers)
+
+**Answer:** 	
+- Use the encrypted SSL/TLS endpoint.
+- Encrypt it on the client-side before uploading.
+
+(Explanation)[http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingEncryption.html]
+To encrypt your S3 objects in-flight, you need to use the TLS endpoint; alternatively, you can encrypt the data yourself on the client side before upload.
+
+### Question: You have set up AWS Lambda to consume events from an Amazon Kinesis stream. Addition of new data to the stream invokes a Lambda function and passes the event information including the new content to the function. The function then processes the event information. This is an example of a(n) _____.
+
+**Answer:** Pull model
+
+(Explanation)[https://docs.aws.amazon.com/lambda/latest/dg/applications-usecases.html]
+In this scenario, you have AWS Lambda consume events from an Amazon Kinesis stream. Addition of new data to the stream invokes a Lambda function and passes the event information including the new content to the function. The function then processes the event information.
+
+This is the pull model where AWS Lambda polls the stream and invokes a function.
+
+### Question: You have been assigned to as a technical lead to a client that has their own development team. The team is relatively new to developing in the cloud. In a design meeting the developers begin discussing the merits of Amazon SQS vs Amazon Kinesis Stream. In which cases would you use SQS over Kinesis Stream? (Choose 3 answers)
+
+**Answer:**
+- When configuring individual message delay
+- When decoupling the components of an application
+- When you need to scale transparently
+
+(Explanation)[https://aws.amazon.com/sqs/faqs/]
+Amazon SQS offers a reliable, highly-scalable hosted queue for storing messages as they travel between applications or microservices. It moves data between distributed application components and helps you decouple these components. Amazon Kinesis Streams allows real-time processing of streaming big data and the ability to read and replay records to multiple Amazon Kinesis Applications.
+
+### Question: You have been assigned to a client who has an existing AWS cloud environment. They are already using CloudFormation to deploy infrastructure. You also learn that they are using Lambda functions to interact with CloudFormation. Which section of a CloudFormation template will you use to define the Lambda version?
+
+**Answer:** Transform
+
+(Explanation)[http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-anatomy.html]
+For serverless applications (also referred to as Lambda-based applications), the Transform section of CloudFormation specifies the version of the AWS Serverless Application Model (AWS SAM) to use. When you specify a transform, you can use AWS SAM syntax to declare resources in your template. The model defines the syntax that you can use and how it is processed.
+
+You can also use the AWS::Include transform to work with template snippets that are stored separately from the main AWS CloudFormation template. You store your snippet files in an Amazon S3 bucket and then reuse the functions across multiple templates.
+
+### Question: In AWS CodePipeline, you decide to edit a pipeline to add some more stages and actions and you want this most recent revision to run. What should you do to rerun this through the pipeline?
+
+**Answer:** You should manually rerun it.
+
+(Explanation)[http://docs.aws.amazon.com/codepipeline/latest/userguide/how-to-edit-pipelines.html]
+In AWS CodePipeline, a pipeline describes the release process you want AWS CodePipeline to follow, including the stages and actions that must be completed, and you can edit a pipeline to add or remove these elements. Unlike creating a pipeline, however, editing a pipeline does not rerun the most recent revision through the pipeline, and you must manually rerun it if you wish to run the most recent revision through a pipeline you've just edited.
+
+### Question: Your company is using AWS CodeCommit for source control. As an upcoming release draws near, the CEO decides to hire some temporary QA engineers to increase velocity. You must provide them with temporary, cross-account access to your repositories from their personal AWS accounts. What are the best ways to accomplish this, keeping best practices for security in mind? (Choose 2 answers)
+- Create a role in IAM, attach the appropriate policies, authenticate the user against an OIDC-compatible web identity provider, and issue the assume-role-with-saml command to retrieve their temporary credentials.
+- Create a role in IAM, attach the appropriate policies, authenticate the user against a federated identity provider, and issue the get-federated-token command to retrieve their temporary credentials.
+
+(Explanation)[http://docs.aws.amazon.com/codecommit/latest/userguide/temporary-access.html]
+Web identities require the assume-role-with-web-identity command, and federated identities require the get-federated-token command to retrieve their temporary credentials.
+
+## Skipped
+### Question: You are managing the migration of company databases to AWS, specifically to Amazon RDS. Your company requires high availability, which you have built into the design with a multi-AZ configuration. You have implemented your design, and are just about ready to move it in to production. What additional step can you take to ensure a successful deployment?
+**Answer:** Test failover for your DB instance to see how long it takes, and ensure that your programmatic connection to the new database is working.
+
+(Explanation)[http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_BestPractices.html]The Amazon RDS Service Level Agreement requires that you follow best practice guidelines. One of them is to test failover for your DB instance to understand how long the process takes for your use case and to ensure that the application that accesses your DB instance can automatically connect to the new DB instance after failover. Failover will occur in a multi-AZ configuration to a standby server. Read replicas are for scaling, not high availability, and are not involved in the failover process.
+
+### Question: How does AWS Direct Connect differ from a VPN Connection?
+**ANswer:** AWS Direct Connect uses dedicated, private network connections between your intranet and Amazon VPC.
+
+(Explanation)[http://aws.amazon.com/directconnect/faqs/]
+A VPC VPN Connection utilizes IPSec to establish encrypted network connectivity between your intranet and Amazon VPC over the Internet. VPN Connections can be configured in minutes and are a good solution if you have an immediate need, have low to modest bandwidth requirements, and can tolerate the inherent variability in Internet-based connectivity.
+
+AWS Direct Connect does not involve the Internet; instead, it uses dedicated, private network connections between your intranet and Amazon VPC.
+
+### Question: What happens when you delete a deployment group with the AWS CLI in AWS CodeDeploy?
+**Answer:** All details associated with that deployment group will also be deleted from AWS CodeDeploy.
+
+(Explanation)[http://docs.aws.amazon.com/codedeploy/latest/userguide/how-to-delete-deployment-group.html]
+If you were to delete a deployment group with the AWS CLI in AWS CodeDeploy, then all existing deployment details associated with that deployment group will also be deleted from the AWS CodeDeploy system. However, the instances that were participating in the deployment group will remain unchanged. This action cannot be undone. 
+
+### Question: A user has deployed an application on an EBS backed EC2 instance. For a better performance of application, it requires dedicated EC2 to EBS traffic. How can the user achieve this?
+**Answer:** Launch the EC2 instance as EBS optimized with PIOPS EBS
+
+(Explanation)[http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-ec2-config.html]
+Any application which has performance sensitive workloads and requires minimal variability with dedicated EC2 to EBS traffic should use provisioned IOPS EBS volumes, which are attached to an EBS-optimized EC2 instance or it should use an instance with 10 Gigabit network connectivity. Launching an instance that is EBS-optimized provides the user with a dedicated connection between the EC2 instance and the EBS volume.
+
+### Question: In a certain Lambda application, AWS Lambda polls a DynamoDB stream and invokes a Lambda function when updates are made to the DynamoDB table. What happens when the Lambda function is throttled?
+**Answer:** AWS Lambda attempts to process the throttles batch of records until the data expires.
+
+(Explanation)[http://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html]For stream-based event sources, AWS Lambda polls your stream and invokes your Lambda function. If your Lambda function is throttled, AWS Lambda attempts to process the throttled batch of records until the time the data expires.]
+
+### Question: You are using AWS CodeDeploy and it has started the deployment process by attempting to deploy the application revision to the deployment group's unhealthy instances. For each successful deployment, AWS CodeDeploy has changed the instance's health status to healthy and added it to the deployment group's healthy instances as you had expected. AWS CodeDeploy then compared the current number of healthy instances to minimum healthy instances and discovered that the number of healthy instances is less than or equal to minimum healthy instances. In this particular scenario, what will AWS CodeDeploy do?
+**Answer:** AWS CodeDeploy will cancel the deployment to ensure that the number of healthy instances doesn't decrease with further deployment.
+
+(Explanation)[http://docs.aws.amazon.com/codedeploy/latest/userguide/host-health.html]
+AWS CodeDeploy starts a deployment process by attempting to deploy the application revision to the deployment group's unhealthy instances. For every successful deployment, AWS CodeDeploy changes the instance's health status to healthy and adds it to the deployment group's healthy instances. It then goes on to compare the current number of healthy instances to minimum healthy instances and if the number of healthy instances is less than or equal to minimum healthy instances, cancels the deployment to ensure that the number of healthy instances doesn't decrease with further deployments.
+
+### Question: You have configured Lambda to pull events from an Amazon DynamoDB stream that contains change logs on a DynamoDB table but it doesn't seem to be working correctly. What role/roles must be granted permission for "pull model" to work successfully?
+**Answer:** invocationrole and executionrole
+
+(Explanation)[http://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html]You can configure AWS Lambda to pull events from an Amazon DynamoDB stream that contains change logs on a DynamoDB table, or from an Amazon Kinesis stream to which you publish events from your custom application.
+
+This is also referred as the "pull model" where AWS Lambda pulls the updates from the stream and invokes your function. In this case, you must grant permission to both pull from the stream (invocationrole) and execute (executionrole).
+
+### Question: You’ve decided to use CodePipeline to orchestrate the build, test, and deploy phases within your new software navigation module. All source code is maintained within a CodeCommit repository. Which of the following statements is correct with respect to the method in which your pipeline will be triggered, assuming you used the AWS CodePipeline console to construct the pipeline and accepted the defaults for the Change Detection options:
+**Answer:** CloudWatch Events are used to automatically start the pipeline
+
+(Explanation)[https://docs.aws.amazon.com/codepipeline/latest/userguide/pipelines-about-starting.html]
+Answer “CloudWatch Events are used to automatically start the pipeline” is correct. Amazon CloudWatch Events can be set up to point to AWS CodePipeline as a target. AWS CodePipeline uses Amazon CloudWatch Events to detect changes in the configured AWS CodeCommit or Amazon S3 source. When a change occurs, Amazon CloudWatch Events automatically starts your pipeline. When creating a pipeline within the AWS CodePipeline console, the default setting for change detection is to use CloudWatch Events.
+
+### Question: By default, the log files delivered by CloudTrail are encrypted by ____.
+**Answer:** server-side encryption with SSE-S3
+(Explanation)[http://docs.aws.amazon.com/awscloudtrail/latest/userguide/encrypting-cloudtrail-log-files-with-aws-kms.html]
+By default, AWS CloudTrail uses S3 server-side encryption with Amazon S3-managed encryption keys (SSE-S3) to encrypt the content of log files. Once the content is encrypted, it is delivered to the S3 storage bucket.
+
+### Question: You are asked to establish a baseline for normal Amazon ECS performance in your environment by measuring performance at various times and under different load conditions. To establish a baseline, Amazon recommends that you should, at a minimum, monitor the CPU and ____ for your Amazon ECS clusters and the CPU and ____ metrics for your Amazon ECS services. 
+
+**Answer:** memory reservation and utilization; memory utilization
+(Explanation)[http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_monitoring.html]As you monitor Amazon ECS, store historical monitoring data so that you can compare it with current performance data, identify normal performance patterns and performance anomalies, and devise methods to address issues.
+
+To establish a baseline, you should, at a minimum, monitor the following items:
+· The CPU and memory reservation and utilization metrics for your Amazon ECS clusters
+· The CPU and memory utilization metrics for your Amazon ECS services
+
+### Question: A hospital wants to switch over to Amazon VPC, and wants to connect the hospital office network to the Amazon VPC environment and migrate all medical records to the VPC. The hospital just spent a significant portion of its budget to bury fiber optic cable to reduce network latency in preparation for the migration of all its records to the VPC. This means that the VPC needs to be highly available at all times to support patient emergencies. However, the hospital doesn’t have a team to dedicated to implementing high availability solutions for VPN endpoints. Which network design pattern to connect to the Amazon VPC environment would make the most sense for the hospital?
+
+**Answer:** Establish a hardware-based, IPsec VPN connection from the hospital’s network to the AWS-managed network equipment attached to the hospital’s Amazon VPC.
+
+(Explanation)[http://media.amazonwebservices.com/AWS_Amazon_VPC_Connectivity_Options.pdf]Establishing a hardware-based, IPsec VPN connection from the hospital’s network to the AWS-managed network equipment attached to the hospital’s Amazon VPC is the most suitable option for the hospital. Since the hospital just invested in better internet connectivity infrastructure to reduce network latency, reusing existing VPN equipment and internet connections makes the most sense. This approach also allows the hospital to leverage an AWS-managed VPN endpoint that includes automated multi–data center redundancy and failover built into the AWS side of the VPN connection so the hospital doesn’t have to worry about implementing its own redundancy and failover solutions.
+
+### Question: Which of the following best describes how to deploy an AWS CodeDeploy application to multiple regions?
+**Answer:** Define the application in your target regions, copy the application bundle to an Amazon S3 bucket in each region, and then start the deployments using either a serial or parallel rollout across the regions.
+(Explanation)[http://aws.amazon.com/codedeploy/faqs/]
+AWS CodeDeploy performs deployments with AWS resources located in the same region. If you wish to deploy an application to multiple regions, you should do the following.
+
+define the application in your target regions
+copy the application bundle to an Amazon S3 bucket in each region
+start the deployments using either a serial or parallel rollout across the regions.
+
+### Question: Which of the following statements holds true during rolling updates in Elastic Beanstalk?
+**Answer:** Elastic Beanstalk applies a separate timeout to each batch in the operation.
+
+(Explanation)[http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/health-enhanced.html]
+During rolling updates, Elastic Beanstalk will apply a separate timeout to each batch in the operation. The timeout is also set as part of the environment's rolling update configuration. if all instances in the batch are healthy within the command timeout, the operation will continue to the next batch. If not, the operation fails.
+
+### Question: What is one reason that AWS does not recommend that you configure your ElastiCache so that it can be accessed from outside AWS?
+**Answer:** The NAT instance serves as a single point of failure.
+
+(Explanation)[http://docs.aws.amazon.com/AmazonElastiCache/latest/UserGuide/Access.Outside.html]
+One of the reasons that AWS does not recommend that you configure your ElastiCache so that it can be accessed from outside AWS is that the NAT instance serves as a single point of failure. Here are other reasons that this practice is not recommended:
+
+The NAT instance is acting as a proxy between clients and multiple clusters. The addition of a proxy impacts the performance of the cache cluster. The impact increases with number of cache clusters you are accessing through the NAT instance.
+The traffic from clients to the NAT instance is unencrypted. Therefore, you should avoid sending sensitive data via the NAT instance.
+The NAT instance adds the overhead of maintaining another instance.
+
+### Question: Your company uses multiple Amazon VPCs and is setting up a new office. The company is deciding on the best way to connect this new, remote office network with the company’s Amazon VPC environment. Due to the fact it is a new office, no VPN equipment or internet connections exist yet, so this office can design any connection design it desires. The highest priorities are:
+- A predictable network performance
+- A private connection avoiding the public internet
+- Reduced bandwidth costs
+Minimal administration required to maintain the high availability of network endpoints
+Which VPC connection option best fit your requirements to connect your new office to one of your VPCs
+
+**Answer:** Connect via AWS Direct Connect.
+(Explanation)[http://media.amazonwebservices.com/AWS_Amazon_VPC_Connectivity_Options.pdf]Establish a private connection from your new office’s network to your Amazon VPC using AWS Direct Connect is the most suitable option in this case. This option provides predictable network performance, reduces bandwidth costs, and doesn’t require that customers be responsible for implementing high availability solutions for all VPN endpoints. The downside of this option (possible requiring additional telecom and hosting provider relationships) is mitigated in this instance because the office is new and would need to provision a whole new network anyway.
+
+### Question: Looking to perform complex computations based on a number of mathematical sequences (like a geometric series and the Fibonacci sequence [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89…]), you decide to precompute these sequences out to their thousandth values and store them in Amazon DynamoDB for quick access. Since they are mathematical sequences, order is very important. If the names of the sequences are the key and their respective sequences are the value, which attribute type is the most suitable?
+**Answer:** Document
+(Explanation)[https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.NamingRulesDataTypes.html]
+While the “number set” might seem tempting, it’s not appropriate in this case because sets can only contain un-ordered values and are also unordered. The “document” type actually includes the type “list” which can store an ordered collection of values and would be the most appropriate in this case.

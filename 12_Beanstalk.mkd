@@ -1,0 +1,33 @@
+# 12. AWS Beanstalk
+
+It allows you deploying your applications in the cloud environment: free to use.
+
+**Components:**
+* Application Version
+* Environment
+* Environment Configurations
+* Environment Tier
+* Configuration Template
+* Applications
+* Platform
+
+## Environment Tier
+You can choose between and Web Server Tier, which it will response to HTTP requests, and Worker Tier, which will be used in conjunction with other services (let's say reading messages from SQS).
+
+For the Web Server Tier you would have a configuration with Route 53 in ingress, then a load balancer, autoscaling group and finally the EC2 instances with a security policy allowing traffic on port 80 for all the EC2 instances.
+
+For the Worker Tier you would have SQS, Autoscaling, and the IAM service role to allow the EC2 instances to read from the queue. And on each of the EC2 machines there will be a deamon installed to read messages from the queue.
+
+## Deployment configuration
+How to deploy?
+
+* All at once: depoloy to all instances all at once, this can have downtime and impact your customers
+* Rolling: deploy a batch of instances at a time -> your capacity is reduced by the size of the batch
+* Rolling with additional batch: Adds an additional batch and performs rolling deployment. Capacity not decreased
+* Immutable: doubles the capacity and performs the rollout with the new version, then tears down the old deployment
+
+## Monitoring
+Data are sent and healthchecks performed every 5 minutes
+You can have 2 types of healthchecks:
+* Basic Health Checks: Lower level granularity
+* Advances Health Checks: this gives you more granularity and healthchecks failure type that you can come across.
