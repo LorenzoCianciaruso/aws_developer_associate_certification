@@ -1,0 +1,22 @@
+# 13. CICD
+CodePipeline is composed by, CodeCommit, CodeBuild and CodeDeploy.
+
+You can define your own pipeline via CodePipeline and integrate with either AWS or other services (Jenkins).
+
+## CodeBuild
+
+They are docker containers that you can pick from and they will run all the steps declared into the buildSpec.yml
+
+## CodeDeploy
+
+CodeDeploy, deamon component to be installed on the machine that are part of the **DeployGroup**.
+The deamon is the entrypoint for updates whenever there is a new version to be deployed.
+
+CodeDeploy works at regional level, so it can only deploy in it's own region. If you want to go multi-region, copy the artifact in the region's bucket and
+then kick off codeDeploy to deploy to that region.
+
+AppSpec.yml is the file that contains the configuration that describes how to perform the deployment (installing dependencies, permissions, etc)
+
+You can configure if the rollout is by one instance at a time, half of the instances at a time, or all in one go.
+
+You can send notification, or trigger actions after every deployment.
