@@ -1,0 +1,31 @@
+# Route 53
+
+Domain Name Management to resolve domain names into IP addresses.
+AWS assures 100% availability for all the Route 53 requests, this means that you should always get a response for a Route 53 call.
+
+## Routing
+
+### Failover
+Using Health checks you can determine what instances are healthy and which aren't. So that in case one instance is not healthy Route 53 can redirect all the traffic to the healthy ones.
+Failover configuration
+- Active-Active:
+- Active-Passive:
+- Mixed Configuration:
+
+### DNS Strategies
+You can spread the load based on weight or just balance it across the node, or implement a latency policy
+
+Here are some strategies:
+
+- Based solely on Health of the node
+- Based on Latency and secondary on Health of the nodes. So you can define the strategy based on the region the client is calling from
+
+### Private Hosted Zones (Split Horizon DNS)
+
+Split Horizon DNS means that you get different response based on the fact that you are on a VPC.
+If that is enabled, you might reach diffrent IPs (based on the record set) than if you were on the public internet.
+Public hosted zones get the priority on private ones (if a Private Hosted Zone record is not set). If a Private Hosted Zone record is set, and you are on the VPC, than the Private Hosted Zone record take the precedence.
+
+**NOTE about HealthChecks:** if you implement a string check, Ruote 53 will expect to see the exact string you determine in the **first 5120 bytes** of the response from your node! Otherwise marked as unhealthy.
+
+
