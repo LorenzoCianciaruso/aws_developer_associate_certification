@@ -1,0 +1,35 @@
+# 15. VPC - Virtual Private Cloud
+
+You can define a VPC within your AWS account, and only your account will have access to it.
+
+**Concepts:**
+* VPC - You define a VPC by giving it a CIDR block of IP addresses, starting from /16 to /28
+* Subnet - You can have as many subnet as you want in your VPC
+* Route Table - One Route Table can be associated to many subnets, but there is only per per subnet. It specifies you data are routed within the VPC
+
+By default when you create a subnet, that will be private. It will only contains the VPC CIDS block with LOCAL path. If you want to make it public you'll have to have a Internet Gateway at the boundaries of your VPC with a row in your route table saying 0.0.0.0/0 -> IGT ID.
+
+In each VPC, AWS needs 3 addresses, so in total you can't use 5 IP addresses.
+
+## Security
+
+### NACLS - Network Access List
+Defined rules to allow or deny inbound/outbound traffic to/from the VPC.
+
+### Security Groups
+
+These are rules associated at instance level. So it's not at subnet level, but it is at instance level. For the security groups there is not explicit allow or deny per rule. If there is a rule matching it is supposed to be allowed, otherwise everything else is dropped.
+
+### NAT Gateway
+It allows private subnets to get access to the Internet. NAT Gateway will have to live within the public subnet, and a route table row will be added to the private subnet with 0.0.0.0/0 -> NAT ID. This is useful when for exampl some instances in the private network need some kind of update from the internet. The foundamental thing is that the NAT will deny any inbound request coming from the internet, but only allows outbound requests to get to the internet.
+
+### Bastion Hosts
+Bastions hosts are useful when engineers need to perform some maintanance on hosts that live in the private subnet. Because the private subnet will deny any requests from the internet, the engineers won't be able to access the hosts in the private subnet just as it is. Although, by using Bastions hosts and putting them in the public subnet, they will be able to access the private subnet.
+
+So, in order to achieve this you'll need to:
+
+* Allow SSH connection in your Internet Gateway from the internet (maybe even 0.0.0.0/0?)
+* Allow your NACL SSH connection to the Bastion Host in your public subnet: SSH on port 22 from the engineer's IP address
+* Allow your NACL SSH connection from the Bastion Host to your instances in your private subnet: SSH on port 22 from your ACL in your public subnet.
+
+The Bastion host acts as a jumpbox to your private instances. The critical thing is now where do you store the 2 private keys that are needed to access the bastion and the private hosts. You can't store the private key to access the private hosts on the Bastion, because if it gets compromised, the attacker will have access to all the keys on the bastion. So, the best approach is to implement an SSH Agent Forwarder, where the engineer has both the private keys on their laptop and they will jump on the Bastion host with the first key, and also include the secodn key which will be then used to jump on the private subnet.
