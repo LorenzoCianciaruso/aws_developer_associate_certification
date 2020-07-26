@@ -29,6 +29,9 @@ Messages can be encrypted with the use of KMS.
 * Queue for messages that consumers have failed to delete from the queue
 * It has to be of the same type of the main queue (either standard or FIFO)
 
+### (Short vs Long Polling)
+[https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html#sqs-long-polling]
+
 ## SNS - Simple Notification Service
 
 Event Notifications to other services. It can publish events to:

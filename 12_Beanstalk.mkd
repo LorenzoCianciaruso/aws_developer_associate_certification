@@ -1,5 +1,4 @@
 # 12. AWS Beanstalk
-
 It allows you deploying your applications in the cloud environment: free to use.
 
 **Components:**

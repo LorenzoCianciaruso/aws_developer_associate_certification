@@ -77,6 +77,8 @@ DataWarehouse DB
 Fully Managed. Supports Document and key store objects.
 You can download a local version of Dynamo DB so that you can test it locally. It is encrypted. Supports both speed and perfomance
 
+DynamoDB DAX is an in-memory cache for dynamo db that improves performance up to 10x, reducing response time down to **microseconds**.
+
 ### Amazon ElastiCache
 It's basically a frontline cache fully managed built on top of Redis and Memcache.d.
 Memcached for speed and simplicity, Redis supports more feature (cache for complex objects)

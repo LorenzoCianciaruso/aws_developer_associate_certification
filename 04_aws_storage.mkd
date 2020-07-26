@@ -4,9 +4,7 @@
 * File storage: There is a file system and multiple users can access it
 * Object storage: Flat address space addressed by a key
 
-
 ## S3
-
 Fully manage object storage. Unlimited scalability and high availability, file stored across multiple AZs
 Largest file is 5 terabytes
 
@@ -17,21 +15,26 @@ Bucket has to be named uniquely globally
 By default 100 buckets limit but it can be increased
 
 ### Storage classes
-
 * Frequently accessed
 * Infrequently accessed: more cost effective than Standard-IA but it has less Availability 99.5%
 * Intelligent Tiering: depending on how many time you access the data AWS will move objects to the infrequently accessed if they aren't used
 much
 
 ### Security
-
-
 * Bucket policy
 * Access Control List: for users outside your AWS account.
 * Data Encryption: via S3 managed keys, KMS manages keys, Customer Managed (Encryption Infographic)[https://awsinfographics.s3.amazonaws.com/S3_Encryption_Infographic.png]
 
 **Features:**
 * Versioning, once enabled it can be disabled but only suspended. It adds costs
+
+### Amazon S3 Transfer Acceleration:
+Requirements:
+- Transfer Acceleration is only supported on virtual-hosted style requests. For more information about virtual-hosted style requests, see Making requests using the REST API.
+- The name of the bucket used for Transfer Acceleration must be DNS-compliant and must not contain periods (".").
+- Transfer Acceleration must be enabled on the bucket. After enabling Transfer Acceleration on a bucket it might take up to 20 minutes before the data transfer speed to the bucket increases.
+- To access the bucket that is enabled for Transfer Acceleration, you must use the endpoint bucketname.s3-accelerate.amazonaws.com. or the dual-stack endpoint bucketname.s3-accelerate.dualstack.amazonaws.com to connect to the enabled bucket over IPv6.
+- You must be the bucket owner to set the transfer acceleration state. The bucket owner can assign permissions to other users to allow them to set the acceleration state on a bucket. The s3:PutAccelerateConfiguration permission permits users to enable or disable Transfer Acceleration on a bucket. The s3:GetAccelerateConfiguration permission permits users to return the Transfer Acceleration state of a bucket, which is either Enabled or Suspended. For more information about these permissions, see Example — Bucket Subresource Operations and Identity and access management in Amazon S3.
 
 **S3 anti-patterns:**
 * Data archiving for long term use
@@ -40,7 +43,6 @@ much
 * Structured data with queries
 
 ## Amazon Glacier
-
 Half the cost than S3, but doesn't provide immediate access (cold storage)
 Good for **backups** and archival requirements. Same Durability than S3, but it can take up to 7hrs to get data.
 Everything is done via Apis, no portal.
@@ -90,7 +92,6 @@ Cloudfront is located on the so called Edge platform, those are datacenter locat
 It's priced based on the network consumption.
 
 ## AWS Storage gateway
-
 It's an abstraction layer that allows the shared file system of your company to be stored into S3 or other AWS Storage Services.
 It is an appliance downloaded from Amazon and run as a VM in your data center!
 
@@ -107,7 +108,6 @@ Pricing is per: data storage, data transfer and requests.
 If you need to transfer data in the order of petabytes and it would take more than a week to upload them using the internt then AWS Snowball might help you. Amazon will send you physical encrypted drives where you'll upload all of your data and ship them back to amazon, which will then upload them to the cloud. Everything is encrypted and support the toughest level of compliance so that even health personal data can be uploaded.
 
 ## Test practice
-
 **Question:** In Amazon CloudFront, when using a network of edge locations around the world, requests for your dynamic content are ___________.
 **Answer:** sent to your origin servers running within or outside of AWS.
 In Amazon CloudFront, requests for your dynamic content are carried back to your origin servers running in Amazon Web Services (e.g., Amazon EC2, Elastic Load Balancing) over optimized network paths for a more reliable and consistent experience. (here)[http://aws.amazon.com/cloudfront/]

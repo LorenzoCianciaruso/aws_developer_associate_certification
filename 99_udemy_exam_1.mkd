@@ -1,0 +1,9 @@
+## Udemy Exam 1
+
+Things to revisit:
+
+- X-Ray
+- Beanstalk
+- CloudTrail
+
+Reviewed up to question 23

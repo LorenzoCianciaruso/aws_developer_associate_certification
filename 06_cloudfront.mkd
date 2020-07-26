@@ -2,8 +2,7 @@
 
 It caches content that can live in multiple origin. Usually S3 is one of the most popular.
 Edges are the datacenter where cloudfront live. They are external to the general AWS region. This is because
-a client can request a resource from S3 and the closest edge will be able to distribute the requested resource faster than 
-going to the closest regions. There are more edges than regions.
+a client can request a resource from S3 and the closest edge will be able to distribute the requested resource faster than  going to the closest regions. There are more edges than regions.
 
 In case the cache is missed, than the request will be forwarder to the region to get the resoruce.
 
@@ -29,4 +28,4 @@ client devices calling, etc.
 * Design for failure: use Route 53 to perform healthchecks and take necessary actions. Use Cloudwatch for alarm and notifications.
 
 ## Best practises for Security
-* enble end to end HTTPS
+* enble end to end HTTPS -> Which means enable Viewer Protocol Policy (which allows HTTPS from the client side), and Origin Protocol Policy (which allows for HTTPS when retrieving resources from the origin)

@@ -34,7 +34,6 @@ So, in order to achieve this you'll need to:
 The Bastion host acts as a jumpbox to your private instances. The critical thing is now where do you store the 2 private keys that are needed to access the bastion and the private hosts. You can't store the private key to access the private hosts on the Bastion, because if it gets compromised, the attacker will have access to all the keys on the bastion. So, the best approach is to implement an SSH Agent Forwarder, where the engineer has both the private keys on their laptop and they will jump on the Bastion host with the first key, and also include the secodn key which will be then used to jump on the private subnet.
 
 ## Data Centers / VPC communications
-
 You can create a communication channel between your data centers and your VPC hosted in AWS.
 In order to do so, you'll need a couple of additional components:
 
@@ -43,7 +42,6 @@ In order to do so, you'll need a couple of additional components:
 * and in the middle you can have a VPN tunnel.
 
 ### Direct Connect
-
 One way to connect your DC to your VPC is by using Direct Connect. This is useful to avoid redirecting your traffing through the public internet.
 
 You solution is to have a Direct Connect datacenter which will host 2 subnets, one that will contain a Customer Router, and the second one containing the AWS Router which will be able to reach to the AWS region that include your resources.
@@ -51,10 +49,14 @@ You solution is to have a Direct Connect datacenter which will host 2 subnets, o
 So from your VPC you need a router pointing to the Customer managed router in the Direct Connect zone, and this one will forward all the traffic to the AWS router, which will then reach to the AWS region.
 
 ### VPC Peering
-
 VPC Peering is used to connect different AWS VPCs. They can either be cross-region or within the same region. One important thing is that the VPC peering are 1-to-1s, so if you have 3 VPCs A, B, and C, with the following configuraiton A -> B -> C, A cannot talk to C even if B can talk to both. So if you want A to talk to C, it will have to have a VPC Peering between A and C.
 
 Obviosly, the VGW of the VPCs will have to allow inbound/outbound traffic from the other VPC.
 
 ### Transit Gateway
 the Transit Gateway allows you to minimize the number of connections (either VPC Peering, VPN tunnels or Direct connect) so that everything that is connected to the Transit Gateway, is connected to everything else.
+
+## Logging
+If you want monitor the traffic going in&out from your VPC, especially when you want to monitor the IPs connectiong to your VPC or troubleshooting existing issue, you can enable **Flow Log**. This is a logging mechanism that
+helps keeping track of the traffic reaching to your VPC. It then can be stored in S3. 
+Flow logs can help you with a number of tasks; for example, to troubleshoot why specific traffic is not reaching an instance, which in turn helps you diagnose overly restrictive security group rules. You can also use flow logs as a security tool to monitor the traffic that is reaching your instance.
