@@ -2,8 +2,8 @@
 
 Things to revisit:
 
-- X-Ray
-- Beanstalk
-- CloudTrail
+- X-Ray X
+- Beanstalk X
+- CloudTrail X
 
 Reviewed up to question 23

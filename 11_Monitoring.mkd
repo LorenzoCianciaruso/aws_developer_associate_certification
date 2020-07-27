@@ -1,5 +1,26 @@
-# 11. X-Ray
+# 11. Monitoring
 
+## CloudWatch
+Monitoring application via logs and metrics. Performance metrics and events
+
+* Namespace: were the metrics or logs belong to, so that it doesn't get aggregated with other namespaces.
+* Metrics: key-value data
+* Dimensions: Given a namespace, you can have different aggregation based on some topics. For instance, given the EC2 Namespace you might want to visualize metrics per auto scaling group, or per instance. And these would be two different dimensions.
+* Statistics
+
+Resolutions:
+* Standard resolution -> metrics every 1 minute
+* Hight resolution -> metrics every 1 second
+By default, any metrics produced by AWS are standard resolution
+
+## Cloud-Trails
+Records activity made on your account:
+* create instance
+* destroy instances
+
+Logs can be delivered to an s3 bucket
+
+## X-Ray
 It provides vidibility of performance of your distributed application. Very similar to what Splunk does, it provides a client (**X-Ray daemon**) to collect distributed logs from diffierent hosts via UDP, and then these data are published to the centralised X-Ray Server. And from here you can visualize where your bottlenecks or perfomance impacts are.
 
 **Service Map** is the visualization of the traces performance within your application.
@@ -8,8 +29,8 @@ It provides vidibility of performance of your distributed application. Very simi
 **Subsegment**: Remote call or local compoute within a single service
 **Trace**: End to end path of a request through out your service
 **Filters**: Expression to filter traces or requests
-**Annotation**: Business data added to traces, index for filtering (sourcetype?)
-**Metadata**: Business data added to traces, but not indexed for filtering (other filtering fields)
+**Annotation**: Business data added to traces. These are added by the system and are indexed for filtering (sourcetype?)
+**Metadata**: Business data added to traces, added by the user and **not** indexed for filtering (other filtering fields)
 
 ## X-Ray and Lambda integration:
 AWS Lambda uses environment variables to facilitate communication with the X-Ray daemon and configure the X-Ray SDK.
