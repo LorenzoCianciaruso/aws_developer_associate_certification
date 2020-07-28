@@ -29,7 +29,7 @@ It provides vidibility of performance of your distributed application. Very simi
 **Subsegment**: Remote call or local compoute within a single service
 **Trace**: End to end path of a request through out your service
 **Filters**: Expression to filter traces or requests
-**Annotation**: Business data added to traces. These are added by the system and are indexed for filtering (sourcetype?)
+**Annotation**: Business data added to traces. These are indexed for filtering (sourcetype?)
 **Metadata**: Business data added to traces, added by the user and **not** indexed for filtering (other filtering fields)
 
 ## X-Ray and Lambda integration:

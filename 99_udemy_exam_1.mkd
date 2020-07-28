@@ -6,4 +6,4 @@ Things to revisit:
 - Beanstalk X
 - CloudTrail X
 
-Reviewed up to question 23
+Reviewed up to question 48
