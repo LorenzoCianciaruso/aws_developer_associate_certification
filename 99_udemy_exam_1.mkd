@@ -1,9 +1,13 @@
-## Udemy Exam 1
+# Udemy Exam 1
 
 Things to revisit:
 
 - X-Ray X
 - Beanstalk X
 - CloudTrail X
+- AWS Systems Manager Parameter Store
+- AWS SAM 
+- AWS Secret Manager
+- CloudFormation [https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-anatomy.html]
 
 Reviewed up to question 48

@@ -1,0 +1,9 @@
+# Udemy Exam 2
+
+- Dynamo DB: Partitions, Indexes, Sort Keys and Secondary Indexes
+- X-Ray, CloudWatch, X-Forwarder-For
+- CodeDeploy, AppSpec
+- Federation, session token etc
+- KMS and request headers
+
+Review again questions 32, 43, 48, 59, 60

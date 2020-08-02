@@ -13,6 +13,10 @@ S3 manages the key for you, no extra configuration needed.
 Object are encrypted and decrypted with the use of a plain text key and a master key. The plain text key is a new one for each object,
 while the S3 key is the same each time given a bucket.
 
+Amazon S3 supports bucket policies that you can use if you require server-side encryption for all objects that are stored in your bucket. For example, you can set a bucket policy which denies permission to upload an object (s3:PutObject) to everyone if the request does not include the **x-amz-server-side-encryption** header requesting server-side encryption with SSE-KMS. 
+
+When you upload an object, you can specify the KMS key using the **x-amz-server-side-encryption-aws-kms-key-id** header which you can use to require a specific KMS key for object encryption. If the header is not present in the request, Amazon S3 assumes the default KMS key. Regardless, the KMS key ID that Amazon S3 uses for object encryption must match the KMS key ID in the policy, otherwise Amazon S3 denies the request.
+
 ## SSE-KMS
 
 There is a key in KMS associated with the bucket
