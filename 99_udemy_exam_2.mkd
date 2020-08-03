@@ -1,6 +1,6 @@
 # Udemy Exam 2
 
-- Dynamo DB: Partitions, Indexes, Sort Keys and Secondary Indexes
+- Dynamo DB: Partitions, Indexes, Sort Keys and Secondary Indexes (X)
 - X-Ray, CloudWatch, X-Forwarder-For
 - CodeDeploy, AppSpec
 - Federation, session token etc
