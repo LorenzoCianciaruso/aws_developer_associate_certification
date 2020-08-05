@@ -4,6 +4,6 @@
 - X-Ray, CloudWatch, X-Forwarder-For
 - CodeDeploy, AppSpec
 - Federation, session token etc
-- KMS and request headers
+- KMS and request headers, READ https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html
 
-Review again questions 32, 43, 48, 59, 60
+Review again questions 32 (X), 43 (X), 48 (X), 59, 60

@@ -164,9 +164,9 @@ They can be run in parallel. If you are using filters to scan across all partiti
 
 #### Secondary Indexes
 * Global Secondary Indexes: across the whole table. You need to define a specific throughput for these indexes. 5 GSI per table
-* Local Secondary Indexes: across single partition keys, they are less expensive than a Global Seconday Index but they make sense to be used only when you have a composite key in a partition. For example it would makes sense for a query like: get all unshipped orders for a given customer. Where customer might be the partition key, orders the sort key, and Status of the delivery the Local Secondary Index. Throughput is shared with the main table. 5 GSI per table
+* Local Secondary Indexes: across single partition keys, they are less expensive than a Global Seconday Index but they make sense to be used only when you have a composite key in a partition. For example it would makes sense for a query like: get all unshipped orders for a given customer. Where customer might be the partition key, orders the sort key, and Status of the delivery the Local Secondary Index. Throughput is shared with the main table. 5 LSI per table
 
-Both types of indexes can be created when the table is created, but only Local Secondary Indexes can be added, changes or removed once they have been created.
+Both types of indexes can be created when the table is created, but only Global Secondary Indexes can be added, changes or removed once they have been created.
 
 #### Partitioning
 When more the 10GB or read/write higher than a certain level. AWS partitions the data even more for performances.
@@ -177,3 +177,16 @@ you might encounter some issues because the read/write capacity is shared across
 Usually number of partition is a power of 2 if data are shared in a balanced way.
 
 The solution to this basically is to not have composite keys in any tables, which makes queries and indexing more complicated but it ensures that all partitions are balanced.
+
+#### DAX
+In memory cache for DynamoDb which provides microseconds latency. It uses a write-through logic, so it's not lazily loaded. It's a cluster, so you can define up to 10 DAX nodes.
+
+#### DynamoDB Global Tables
+Multi-master multi-region DynamoDB database, where data are automatically synchronised across region whenever they are inserted, updated, deleted in one of the regions. Low latency between syncronisation.
+
+#### DynamoDB Stream
+Allows you to create trigger whenever something changes in the database.
+- KEYS_ONLY
+- NEW_IMAGE
+- OLD_IMAGE
+- NEW_AND_OLD_IMAGE
