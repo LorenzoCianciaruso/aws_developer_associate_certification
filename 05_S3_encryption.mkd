@@ -52,11 +52,13 @@ AWS only uses symmetric keys.
 Can encrypt up to 4km in size, used in relationship with DEK (Data Encyription Keys)
 DEKs are used to encrypt data of any size.
 
-These double encyrption of the keys is calles **envelope encryption** and it's useful because even if someone gets access to S3
-they won't be able to decrypt the data even if they possess the DEK. They'll need access to the CMK in order to decrypt the data.
+These double encyrption of the keys is calles **envelope encryption** and it's useful because even if someone gets access to S3 they won't be able to decrypt the data even if they possess the DEK. They'll need access to the CMK in order to decrypt the data.
 
-This is why there are some security policies that you can implement to restrain access to the CMK, so that using grants only
-specific users and services can access the CMK.
+By encrypting the plaintext data key, you can move it outside AWS, while the CMK always stays within AWS.
+So the process is, encrypt plaintext data with a data key, then ecrypt the data key with a plaintext CMK.
+In this way you can ship out the encrypted data and the encrypted data key. And in order to decrypt data, you can decrypt the data key using the plaintext CMK.
+
+This is why there are some security policies that you can implement to restrain access to the CMK, so that using grants only specific users and services can access the CMK.
 
 Each CMK needs to be associated to a policy so that there is at least one user able to manage the key. By default, AWS associates the root account to a new CMK, and the root account can define additional policies to let other users to use and manage the keys.
 
